@@ -1,0 +1,55 @@
+import axios from "axios";
+import React from "react";
+import TopicList from "./TopicList";
+
+export default function Temp() {
+    
+    /**
+     * 0. topics 를 빈배열로 초기화 하여 reactDom 상태로 등록한다.
+     * 1. 화면 진입 시 사용자 목록을 조회한다.
+     *  1.1. 서버에서 요청된 사용자 목록을 topics상태에 업데이트 한다.
+     * 2. topiclist 빈배열 초기화 -> 서버 조회요청 -> 토픽리스트 상태 업데이트
+     */
+
+    // 토픽상태를 초기화한다.
+    const [topics, setTopics] = React.useState<any>([]);
+    
+    // 최초 호출 함수다.
+    React.useEffect(() => {
+        // 사용자 목록을 요청한다.
+        getTopics();
+    }, []);
+
+    const getTopics = (): void => {
+        // 서버에 토픽 목록을 요청 후 상태를 업데이트한다.
+        axios.get('http://localhost:8080/topic').then((rst) => {
+            console.log(rst)
+            setTopics(rst.data);
+        });
+    }
+
+    /**
+     * 1. 사용자 등록 페이지 로 이동하는 버튼을 생성한다.
+     * 2. 사용자 수정 페이지 로 이동하는 버튼을 생성한다.
+     *  2.2. 선택된 사용자의 데이터를 props를 통해 전달한다. or route-dom의 url parameter로 전달한다.
+     * 3. 사용자 삭제 버튼을 생성한다.
+     */
+
+    return (
+        <>
+           {
+               topics.map((t: any) => {
+                   return (
+                       <TopicList
+                       key={t.id}
+                       id={t.id}
+                       title={t.title}
+                       description={t.description}
+                       age={t.age}
+                       />
+                   )
+               })
+           }
+        </>
+    )
+}
