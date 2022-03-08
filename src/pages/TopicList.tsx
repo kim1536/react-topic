@@ -10,6 +10,8 @@ export interface TopicProps {
 
 export default function TopicList(props: TopicProps) {
     return(
+        <>
+        <h1>TopicList</h1>
         <div>
             <table>
             <thead>
@@ -33,6 +35,6 @@ export default function TopicList(props: TopicProps) {
                 <button>Add</button>
             </Link>
         </div>
-        
+        </>
     )
 }
