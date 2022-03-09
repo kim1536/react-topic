@@ -1,23 +1,24 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { getAutomaticTypeDirectiveNames } from "typescript";
-import TopicList, { TopicProps } from "./TopicList";
-
-const serverApi = "http://localhost:8080/";
+import { TopicProps } from "../model/topic";
+import { serverApi } from "../server/server";
+import TopicList from "./TopicList";
 
 export default function Topics() {
 
    const [topics, setTopics] = useState<TopicProps[]>([]);
    
-    useEffect( () => {
-        getTopics();
-    },[])
+    // useEffect( () => {
+    //     getTopics();
+    // },[])
 
-    const getTopics = (): void => {
-        axios.get(`${serverApi}topic`).then((req) => {
-            setTopics(req.data);
-        });
-    }
+    // const getTopics = (): void => {
+    //     axios.get(`${serverApi}topic`).then((req) => {
+    //         setTopics(req.data);
+    //     });
+    // }
 
     return(
        <div>
@@ -30,6 +31,7 @@ export default function Topics() {
                        title={t.title}
                        description={t.description}
                        age={t.age}
+                       createAt={t.createAt}
                        />
                    )
                })
