@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { serverApi } from "../server/server";
-import { Link, Route, Routes } from "react-router-dom";
-import { BrowserRouter } from "react-router-dom";
-import Topics from "./topics";
+
 
 /**
      * 1. 서버에 토픽 등록을 요청한다.
@@ -14,29 +12,22 @@ export default function Add() {
     
     const [topic, setTopics] = useState({
         title:"",
-        age:"",
+        age:0,
         description:"",
     });
    
-    // useEffect( () => {
-    //     addTopic();
-    // },[topic])
-
-    // const addTopic = (): void => {
-    //     axios.put(`${serverApi}topic`).then((req) => {
-    //         setTopics(req.data);
-    //     });
-    // }
 
     const handleSubmit = (e:any) => {
         e.preventDefault();
-        console.log(topic);
+        axios.post(`${serverApi}/topic`,topic).then((req) => {
+            setTopics(req.data);
+        });
         setTopics({
             title:"",
-            age:"",
+            age:0,
             description:"",
         })
-        window.location.href = "http://localhost:3000/";
+        window.location.href = "http://localhost:3001/";
     }
 
     
@@ -52,7 +43,7 @@ export default function Add() {
                 <br />
                 <label>
                 나이: 
-                <input type="text" name="age" value={topic.age} onChange={(e) => setTopics({...topic, age: e.target.value})} placeholder="age"/>
+                <input type="number" name="age" value={topic.age} onChange={(e) => setTopics({...topic, age: e.target.valueAsNumber})} placeholder="age"/>
                 </label>
                 <br />
                 <label>

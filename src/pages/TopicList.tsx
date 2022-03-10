@@ -1,13 +1,26 @@
+import axios from "axios";
 import React from "react";
-import { Link } from "react-router-dom";
 import { TopicProps } from "../model/topic";
+import { serverApi } from "../server/server";
+import { useNavigate } from "react-router-dom";
+
 
 
 
 export default function TopicList(props: TopicProps) {
+    let navigate = useNavigate();
+
+    const deleteTopic = (e: any): void => {
+        axios.delete(`${serverApi}/topic/${props.id}`);
+        window.location.href = "http://localhost:3001/";
+    }
+
+    let handleClick = (e: any) => {
+       navigate("/topic/:id", {topic: });
+    }
+    
     return(
         <>
-        <h1>TopicList</h1>
         <div>
             <table>
             <thead>
@@ -22,16 +35,12 @@ export default function TopicList(props: TopicProps) {
                 <tr>
                     <td>{props.id}</td>
                     <td>{props.age}</td>
-                    <Link to="/Detail">
-                    <td>{props.title}</td>
-                    </Link>
+                    <td onClick={handleClick}>{props.title}</td>
                     <td>{props.createAt}</td>
+                    <td><button onClick={(e) => deleteTopic(props.id)}> 삭제</button></td>
                 </tr>
             </tbody>
         </table>
-            <Link to="/Add">
-                <button>글쓰기</button>
-            </Link>
         </div>
         </>
     )

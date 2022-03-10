@@ -2,8 +2,8 @@ import React from 'react';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Add from './pages/Add';
-import Detail from './pages/Detail';
 import Edit from './pages/Edit';
+import TopicDetail from './pages/topicDetail';
 import Topics from './pages/topics';
 
 
@@ -14,7 +14,7 @@ function App() {
   <Routes>
     <Route path="/" element={<Topics/>} />
     <Route path="/add" element={<Add/>} />
-    <Route path="/topic/:id" element={<Detail/>} />
+    <Route path="/topic/:id" element={<TopicDetail/>} />
     <Route path="/edit/:id" element={<Edit/>} />
   </Routes>
   </BrowserRouter>

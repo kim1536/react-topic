@@ -1,31 +1,36 @@
+
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { TopicProps } from "../model/topic";
 import { serverApi } from "../server/server";
-import TopicList from "./TopicList";
+import Detail from "./Detail";
 
-export default function Topics() {
+
+
+
+export default function TopicDetail() {
+    const { state } = useLocation();
 
    const [topics, setTopics] = useState<TopicProps[]>([]);
    
     useEffect( () => {
-        getTopics();
+        
+        // getTopic();
     },[])
 
-    const getTopics = (): void => {
-        axios.get(`${serverApi}/topic`).then((req) => {
+    const getTopic = (): void => {
+        axios.get(`${serverApi}/topic/:id`).then((req) => {
             setTopics(req.data);
         });
     }
 
     return(
        <div>
-             <h1>TopicList</h1>
            {
                topics.map(t => {
                    return (
-                       <TopicList
+                       <Detail
                        key={t.id}
                        id={t.id}
                        title={t.title}
@@ -36,9 +41,6 @@ export default function Topics() {
                    )
                })
            }
-           <Link to="/Add">
-            <button>글쓰기</button>
-         </Link>
        </div>
     );
 }
